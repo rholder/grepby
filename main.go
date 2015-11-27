@@ -43,9 +43,9 @@ type Config struct {
 	help          bool
 	tail          bool
 	tailDelay     float64
-	output        bool
-	countOutput   io.Writer
-	matchOutput   io.Writer
+	outputMatches bool
+	countWriter   io.Writer
+	matchWriter   io.Writer
 	patterns      []string
 	countTemplate string
 	version       bool
@@ -80,7 +80,7 @@ func newRollup(config *Config) (*Rollup, error) {
 
 func newConfig(args []string, stdout io.Writer, stderr io.Writer) (*Config, error) {
 	config := Config{}
-	config.countOutput = stdout
+	config.countWriter = stdout
 	config.tailDelay = 2.0
 
 	enableTail := false
@@ -113,14 +113,14 @@ func newConfig(args []string, stdout io.Writer, stderr io.Writer) (*Config, erro
 	// --tail always outputs counts to stderr
 	if enableTail {
 		config.tail = true
-		config.countOutput = stderr
+		config.countWriter = stderr
 	}
 
 	// --output outputs matches to stdout and forces counts to stderr
 	if enableOutput {
-		config.output = true
-		config.countOutput = stderr
-		config.matchOutput = stdout
+		config.outputMatches = true
+		config.countWriter = stderr
+		config.matchWriter = stdout
 	}
 
 	// TODO make configurable via argument
@@ -132,7 +132,7 @@ func newConfig(args []string, stdout io.Writer, stderr io.Writer) (*Config, erro
 // Output the rollup counts.
 func outputCounts(rollup *Rollup) {
 	var totalMatched uint64 = 0
-	output := rollup.config.countOutput
+	output := rollup.config.countWriter
 	template := rollup.config.countTemplate
 
 	for _, pc := range rollup.patterns {
@@ -202,13 +202,13 @@ func cli(args []string, stdin io.Reader, stdout io.Writer, stderr io.Writer) err
 	// read from input
 	last := time.Now()
 	scanner := bufio.NewScanner(stdin)
-	shouldOutputMatch := rollup.config.output
-	matchOutput := rollup.config.matchOutput
+	outputMatches := rollup.config.outputMatches
+	matchWriter := rollup.config.matchWriter
 	for scanner.Scan() {
 		line := scanner.Text()
 		matched := updateCounts(rollup, line)
-		if shouldOutputMatch && matched {
-			fmt.Fprintln(matchOutput, line)
+		if outputMatches && matched {
+			fmt.Fprintln(matchWriter, line)
 		}
 		if config.tail {
 			now := time.Now()

@@ -19,11 +19,11 @@ func TestConfigDefault(t *testing.T) {
 		t.Fatal("Expected all arguments to pass through")
 	}
 
-	if config.countOutput != os.Stdout {
+	if config.countWriter != os.Stdout {
 		t.Fatal("Expected default count output to be stdout")
 	}
 
-	if config.matchOutput != nil {
+	if config.matchWriter != nil {
 		t.Fatal("Expected default match output to be nil")
 	}
 }
@@ -45,11 +45,11 @@ func TestConfigTail(t *testing.T) {
 		t.Fatal("Expected only parameters to pass through")
 	}
 
-	if config.countOutput != os.Stderr {
+	if config.countWriter != os.Stderr {
 		t.Fatal("Expected count output to be stderr")
 	}
 
-	if config.matchOutput != nil {
+	if config.matchWriter != nil {
 		t.Fatal("Expected match output to be nil")
 	}
 }
@@ -71,11 +71,11 @@ func TestConfigTailNumbers(t *testing.T) {
 		t.Fatal("Expected only parameters to pass through")
 	}
 
-	if config.countOutput != os.Stderr {
+	if config.countWriter != os.Stderr {
 		t.Fatal("Expected count output to be stderr")
 	}
 
-	if config.matchOutput != nil {
+	if config.matchWriter != nil {
 		t.Fatal("Expected match output to be nil")
 	}
 }
@@ -106,7 +106,7 @@ func TestConfigOutput(t *testing.T) {
 		t.Fatal("Did not expect --tail")
 	}
 
-	if !config.output {
+	if !config.outputMatches {
 		t.Fatal("Expected --output")
 	}
 
@@ -114,11 +114,11 @@ func TestConfigOutput(t *testing.T) {
 		t.Fatal("Expected only parameters to pass through")
 	}
 
-	if config.countOutput != os.Stderr {
+	if config.countWriter != os.Stderr {
 		t.Fatal("Expected count output to be stderr")
 	}
 
-	if config.matchOutput != os.Stdout {
+	if config.matchWriter != os.Stdout {
 		t.Fatal("Expected match output to be stdout")
 	}
 }
@@ -136,7 +136,7 @@ func TestConfigTailOutput(t *testing.T) {
 		t.Fatal("Expected 2 tail delay")
 	}
 
-	if !config.output {
+	if !config.outputMatches {
 		t.Fatal("Expected --output")
 	}
 
@@ -144,11 +144,11 @@ func TestConfigTailOutput(t *testing.T) {
 		t.Fatal("Expected only parameters to pass through")
 	}
 
-	if config.countOutput != os.Stderr {
+	if config.countWriter != os.Stderr {
 		t.Fatal("Expected count output to be stderr")
 	}
 
-	if config.matchOutput != os.Stdout {
+	if config.matchWriter != os.Stdout {
 		t.Fatal("Expected match output to be stdout")
 	}
 }
