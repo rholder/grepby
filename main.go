@@ -23,10 +23,11 @@ const usageText = `Usage: grepby [regex1] [regex2] [regex3]...
   stderr and matching lines are output to stdout.
 
 Options:
-  --tail              Print aggregate output every 2 seconds to stderr
-  --tail=10           Print aggregate output every 10 seconds to stderr
-  --output            Print all lines that match at least one regex to stdout
-  --version           Print the version number
+  --help          Print this help
+  --tail          Print aggregate output every 2 seconds to stderr
+  --tail=10       Print aggregate output every 10 seconds to stderr
+  --output        Print all lines that match at least one regex to stdout
+  --version       Print the version number
 
 Examples:
   grepby 'potato' 'banana' '[Tt]omato' < groceries.txt")
@@ -39,6 +40,7 @@ Report bugs and find the latest updates at https://github.com/rholder/grepby.
 `
 
 type Config struct {
+	help          bool
 	tail          bool
 	tailDelay     float64
 	output        bool
@@ -100,6 +102,8 @@ func newConfig(args []string, stdout io.Writer, stderr io.Writer) (*Config, erro
 			enableOutput = true
 		} else if "--version" == arg {
 			config.version = true
+		} else if "--help" == arg {
+			config.help = true
 		} else {
 			patterns = append(patterns, arg)
 		}
@@ -181,6 +185,12 @@ func cli(args []string, stdin io.Reader, stdout io.Writer, stderr io.Writer) err
 	// short circuit on --version
 	if config.version {
 		fmt.Fprintln(stdout, version)
+		return nil
+	}
+
+	// short circuit on --help
+	if config.help {
+		fmt.Fprintln(stdout, usageText)
 		return nil
 	}
 
