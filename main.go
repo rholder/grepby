@@ -23,6 +23,7 @@ const usageText = `Usage: grepby [regex1] [regex2] [regex3]...
   stderr and matching lines are output to stdout.
 
 Options:
+
   --help          Print this help
   --tail          Print aggregate output every 2 seconds to stderr
   --tail=10       Print aggregate output every 10 seconds to stderr
@@ -30,11 +31,10 @@ Options:
   --version       Print the version number
 
 Examples:
-  grepby 'potato' 'banana' '[Tt]omato' < groceries.txt")
-  20% -  600 - potato")
-  13% -  400 - banana")
-  17% -  500 - [Tt]omato")
-  50% - 1500 - (unmatched)")
+
+  grepby potato banana '[Tt]omato' < groceries.txt
+  tail -f app.log | grepby --tail ERROR INFO
+  tail -f app.log | grepby --output FATAL ERROR WARNING
 
 Report bugs and find the latest updates at https://github.com/rholder/grepby.
 `
@@ -214,6 +214,7 @@ func cli(args []string, stdin io.Reader, stdout io.Writer, stderr io.Writer) err
 			fmt.Fprintln(matchWriter, line)
 		}
 		if config.tail {
+			// TODO make this a repeating go routine
 			now := time.Now()
 			if now.Sub(last).Seconds() > config.tailDelay {
 				outputCounts(rollup)
