@@ -70,6 +70,7 @@ func newRollup(config *Config) (*Rollup, error) {
 	for _, pattern := range config.patterns {
 		regex, err := regexp.Compile(pattern)
 		if err != nil {
+			// give up if any regex doesn't compile
 			return nil, err
 		}
 		pc := PatternCount{pattern, 0, regex}
@@ -90,6 +91,7 @@ func newConfig(args []string, stdout io.Writer, stderr io.Writer) (*Config, erro
 	var patterns []string
 	for _, arg := range args {
 		if strings.HasPrefix(arg, "--tail") {
+			// handle a --tail and a --tail=N
 			enableTail = true
 			if strings.HasPrefix(arg, "--tail=") {
 				td, err := strconv.Atoi(arg[7:])
@@ -105,6 +107,7 @@ func newConfig(args []string, stdout io.Writer, stderr io.Writer) (*Config, erro
 		} else if "--help" == arg {
 			config.help = true
 		} else {
+			// everything else is a pattern
 			patterns = append(patterns, arg)
 		}
 	}
