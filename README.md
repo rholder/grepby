@@ -4,7 +4,14 @@
 [![License](http://img.shields.io/badge/license-apache%202-brightgreen.svg)](https://github.com/rholder/grepby/blob/master/LICENSE)
 
 Use `grepby` to count lines that match regular expressions. It's a bit like
-having group by for grep.
+having group by for grep. If you've ever wanted to sample a fast scrolling log
+file and get an idea about what the percentage of several types of errors look
+like as they stream by, then this might be the tool you've been searching for.
+
+## Features
+* Process an entire stream and give full aggregate match counts
+* Monitor a live stream of lines with --tail sending counts to stderr
+* Composable API with --output of lines matching 1 or more regexes
 
 ## Installation
 Release binaries are available for several platforms.
