@@ -21,7 +21,7 @@ sudo chmod +x /usr/local/bin/grepby
 ```
 
 ### Windows
-Download the `.exe` from the latest [releases](https://github.com/rholder/grepby/releases).
+Download the `.exe` from the latest [releases](https://github.com/rholder/grepby/releases/latest).
 
 ### Source
 Install it from source with `go get`:
