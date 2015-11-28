@@ -1,4 +1,6 @@
-# grepby [![Build Status](https://travis-ci.org/rholder/grepby.svg?branch=master)](https://travis-ci.org/rholder/grepby)
+# grepby [![Build Status](http://img.shields.io/travis/rholder/grepby.svg)](https://travis-ci.org/rholder/grepby)
+[![Latest Version](http://img.shields.io/badge/latest-1.0.0-brightgreen.svg)](https://github.com/rholder/grepby/releases/tag/v1.0.0)
+[![License](http://img.shields.io/badge/license-apache%202-brightgreen.svg)](https://github.com/rholder/grepby/blob/master/LICENSE)
 
 Use `grepby` to count lines that match regular expressions. It's a bit like
 having group by for grep.
@@ -64,5 +66,5 @@ Options:
 ```
 
 ## License
-Debinate is released under version 2.0 of the
+Grepby is released under version 2.0 of the
 [Apache License](http://www.apache.org/licenses/LICENSE-2.0).
