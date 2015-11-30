@@ -46,7 +46,7 @@ Usage: grepby [regex1] [regex2] [regex3]...
   Use grepby to count lines that match regular expressions. It's a bit like
   having group by for grep.
 
-  By default, all of stdin in read and the aggregate counts are output to
+  By default, all of stdin is read and the aggregate counts are output to
   stdout. When --tail or --output are used or combined, counts are output to
   stderr and matching lines are output to stdout.
 
