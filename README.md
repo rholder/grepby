@@ -2,6 +2,7 @@
 [![Build Status](http://img.shields.io/travis/rholder/grepby.svg)](https://travis-ci.org/rholder/grepby)
 [![Latest Version](http://img.shields.io/badge/latest-1.0.0-brightgreen.svg)](https://github.com/rholder/grepby/releases/tag/v1.0.0)
 [![License](http://img.shields.io/badge/license-apache%202-brightgreen.svg)](https://github.com/rholder/grepby/blob/master/LICENSE)
+[![Coverage](http://gocover.io/_badge/github.com/rholder/grepby)](http://gocover.io/github.com/rholder/grepby)
 
 Use `grepby` to count lines that match regular expressions. It's a bit like
 having group by for grep. If you've ever wanted to sample a fast scrolling log
