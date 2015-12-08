@@ -26,7 +26,7 @@ import (
 	"time"
 )
 
-const version = "1.0.1-dev"
+const version = "1.1.0-dev"
 const usageText = `Usage: grepby [regex1] [regex2] [regex3]...
 
   Use grepby to count lines that match regular expressions. It's a bit like
@@ -34,7 +34,8 @@ const usageText = `Usage: grepby [regex1] [regex2] [regex3]...
 
   By default, all of stdin is read and the aggregate counts are output to
   stdout. When --tail or --output are used or combined, counts are output to
-  stderr and matching lines are output to stdout.
+  stderr and matching lines are output to stdout. When --invert is used,
+  non-matching lines are output to stdout and counts are output to stderr.
 
 Options:
 
@@ -42,6 +43,7 @@ Options:
   --tail          Print aggregate output every 2 seconds to stderr
   --tail=10       Print aggregate output every 10 seconds to stderr
   --output        Print all lines that match at least one regex to stdout
+  --invert        Invert matching and output non-matching lines
   --version       Print the version number
 
 Examples:
@@ -58,6 +60,7 @@ type Config struct {
 	tail          bool
 	tailDelay     float64
 	outputMatches bool
+	invert        bool
 	countWriter   io.Writer
 	matchWriter   io.Writer
 	patterns      []string
@@ -100,6 +103,7 @@ func newConfig(args []string, stdout io.Writer, stderr io.Writer) (*Config, erro
 
 	enableTail := false
 	enableOutput := false
+	enableInvert := false
 
 	// default is to output a count to stdout when complete
 	var patterns []string
@@ -116,6 +120,8 @@ func newConfig(args []string, stdout io.Writer, stderr io.Writer) (*Config, erro
 			}
 		} else if "--output" == arg {
 			enableOutput = true
+		} else if "--invert" == arg {
+			enableInvert = true
 		} else if "--version" == arg {
 			config.version = true
 		} else if "--help" == arg {
@@ -131,6 +137,11 @@ func newConfig(args []string, stdout io.Writer, stderr io.Writer) (*Config, erro
 	if enableTail {
 		config.tail = true
 		config.countWriter = stderr
+	}
+
+	if enableInvert {
+		enableOutput = true
+		config.invert = true
 	}
 
 	// --output outputs matches to stdout and forces counts to stderr
@@ -220,11 +231,14 @@ func cli(args []string, stdin io.Reader, stdout io.Writer, stderr io.Writer) err
 	last := time.Now()
 	scanner := bufio.NewScanner(stdin)
 	outputMatches := rollup.config.outputMatches
+	invert := rollup.config.invert
 	matchWriter := rollup.config.matchWriter
 	for scanner.Scan() {
 		line := scanner.Text()
 		matched := updateCounts(rollup, line)
 		if outputMatches && matched {
+			fmt.Fprintln(matchWriter, line)
+		} else if invert && !matched {
 			fmt.Fprintln(matchWriter, line)
 		}
 		if config.tail {
