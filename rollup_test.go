@@ -16,6 +16,7 @@ package main
 
 import (
 	"io/ioutil"
+	"strings"
 	"testing"
 )
 
@@ -57,6 +58,19 @@ func TestRollup(t *testing.T) {
 	for _, unexpected := range unacceptable {
 		if matches(rollup, unexpected) {
 			t.Fatal("Not expected to match:", unexpected)
+		}
+	}
+}
+
+func TestRollupBadRegex(t *testing.T) {
+	args := []string{".**", "def", "ghi"}
+	config, err := newConfig(args, ioutil.Discard, ioutil.Discard)
+	rollup, err := newRollup(config)
+	if err == nil {
+		t.Fatal("Expected rollup error:", rollup)
+	} else {
+		if !strings.HasPrefix(err.Error(), "error parsing regexp") {
+			t.Fatal("Expected a regexp error:", rollup)
 		}
 	}
 }
