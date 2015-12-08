@@ -139,6 +139,7 @@ func newConfig(args []string, stdout io.Writer, stderr io.Writer) (*Config, erro
 		config.countWriter = stderr
 	}
 
+	// --invert sets flag and forces inverted --output to stdout
 	if enableInvert {
 		enableOutput = true
 		config.invert = true
