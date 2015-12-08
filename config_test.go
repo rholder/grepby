@@ -25,6 +25,10 @@ func TestConfigDefault(t *testing.T) {
 	args := []string{"a", "b", "c"}
 	config, _ := newConfig(args, os.Stdout, os.Stderr)
 
+	if config.invert {
+		t.Fatal("Did not expect --invert")
+	}
+
 	if config.tail {
 		t.Fatal("Expected no --tail")
 	}
@@ -46,6 +50,10 @@ func TestConfigTail(t *testing.T) {
 	args := []string{"a", "b", "c", "--tail"}
 	expectedParameters := []string{"a", "b", "c"}
 	config, _ := newConfig(args, os.Stdout, os.Stderr)
+
+	if config.invert {
+		t.Fatal("Did not expect --invert")
+	}
 
 	if !config.tail {
 		t.Fatal("Expected --tail")
@@ -72,6 +80,10 @@ func TestConfigTailNumbers(t *testing.T) {
 	args := []string{"a", "b", "c", "--tail=99"}
 	expectedParameters := []string{"a", "b", "c"}
 	config, _ := newConfig(args, os.Stdout, os.Stderr)
+
+	if config.invert {
+		t.Fatal("Did not expect --invert")
+	}
 
 	if !config.tail {
 		t.Fatal("Expected --tail")
@@ -116,6 +128,10 @@ func TestConfigOutput(t *testing.T) {
 	expectedParameters := []string{"a", "b", "c"}
 	config, _ := newConfig(args, os.Stdout, os.Stderr)
 
+	if config.invert {
+		t.Fatal("Did not expect --invert")
+	}
+
 	if config.tail {
 		t.Fatal("Did not expect --tail")
 	}
@@ -142,12 +158,62 @@ func TestConfigTailOutput(t *testing.T) {
 	expectedParameters := []string{"a", "b", "c"}
 	config, _ := newConfig(args, os.Stdout, os.Stderr)
 
+	if config.invert {
+		t.Fatal("Did not expect --invert")
+	}
+
 	if !config.tail {
 		t.Fatal("Expected --tail")
 	}
 
 	if config.tailDelay != 2 {
 		t.Fatal("Expected 2 tail delay")
+	}
+
+	if !config.outputMatches {
+		t.Fatal("Expected --output")
+	}
+
+	if !reflect.DeepEqual(expectedParameters, config.patterns) {
+		t.Fatal("Expected only parameters to pass through")
+	}
+
+	if config.countWriter != os.Stderr {
+		t.Fatal("Expected count output to be stderr")
+	}
+
+	if config.matchWriter != os.Stdout {
+		t.Fatal("Expected match output to be stdout")
+	}
+}
+
+func TestConfigHelp(t *testing.T) {
+	args := []string{"a", "b", "c", "--help"}
+	config, _ := newConfig(args, os.Stdout, os.Stderr)
+	if !config.help {
+		t.Fatal("Expected --help")
+	}
+}
+
+func TestConfigVersion(t *testing.T) {
+	args := []string{"a", "b", "c", "--version"}
+	config, _ := newConfig(args, os.Stdout, os.Stderr)
+	if !config.version {
+		t.Fatal("Expected --version")
+	}
+}
+
+func TestConfigInvert(t *testing.T) {
+	args := []string{"a", "b", "c", "--invert"}
+	expectedParameters := []string{"a", "b", "c"}
+	config, _ := newConfig(args, os.Stdout, os.Stderr)
+
+	if !config.invert {
+		t.Fatal("Expected --invert")
+	}
+
+	if config.tail {
+		t.Fatal("Did not expect --tail")
 	}
 
 	if !config.outputMatches {
