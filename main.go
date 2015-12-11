@@ -200,6 +200,20 @@ func updateCounts(rollup *Rollup, line string) bool {
 	return false
 }
 
+// Return true when a line should be printed.
+func shouldPrintMatch(invert bool, lineMatched bool, outputMatches bool) bool {
+	if invert {
+		if !lineMatched {
+			return true
+		}
+	} else {
+		if lineMatched && outputMatches {
+			return true
+		}
+	}
+	return false
+}
+
 func cli(args []string, stdin io.Reader, stdout io.Writer, stderr io.Writer) error {
 	if len(args) == 0 {
 		fmt.Fprintln(stdout, usageText)
@@ -236,12 +250,12 @@ func cli(args []string, stdin io.Reader, stdout io.Writer, stderr io.Writer) err
 	matchWriter := rollup.config.matchWriter
 	for scanner.Scan() {
 		line := scanner.Text()
-		matched := updateCounts(rollup, line)
-		if outputMatches && matched {
-			fmt.Fprintln(matchWriter, line)
-		} else if invert && !matched {
+		lineMatched := updateCounts(rollup, line)
+
+		if shouldPrintMatch(invert, lineMatched, outputMatches) {
 			fmt.Fprintln(matchWriter, line)
 		}
+
 		if config.tail {
 			// TODO make this a repeating go routine
 			now := time.Now()

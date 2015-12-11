@@ -91,7 +91,7 @@ func TestCliVersion(t *testing.T) {
 	}
 }
 
-func TestConfigErr(t *testing.T) {
+func TestCliErr(t *testing.T) {
 	args := []string{"a", "b", "c", "--tail=potato"}
 
 	// err should short circuit before reading
@@ -104,4 +104,25 @@ func TestConfigErr(t *testing.T) {
 	} else {
 		t.Fatal("Expected an error")
 	}
+}
+
+func checkPrint(t *testing.T, expected bool, invert bool, matchedLine bool, outputMatches bool) {
+	var print = shouldPrintMatch(invert, matchedLine, outputMatches)
+	if expected != print {
+		t.Fatal("Unexpected value for print,", expected, invert, matchedLine, outputMatches)
+	}
+}
+
+func TestCliShouldPrintMatch(t *testing.T) {
+	checkPrint(t, false, false, false, false)
+	checkPrint(t, false, false, false, true)
+	checkPrint(t, false, false, true, false)
+	checkPrint(t, true, false, true, true)
+
+	// there shouldn't be a case where we invert but don't output, so meh
+	checkPrint(t, true, true, false, false)
+
+	checkPrint(t, true, true, false, true)
+	checkPrint(t, false, true, true, false)
+	checkPrint(t, false, true, true, true)
 }
