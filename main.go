@@ -26,7 +26,7 @@ import (
 	"time"
 )
 
-const version = "1.1.0-dev"
+const version = "1.1.0"
 const usageText = `Usage: grepby [regex1] [regex2] [regex3]...
 
   Use grepby to count lines that match regular expressions. It's a bit like
