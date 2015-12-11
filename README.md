@@ -1,6 +1,6 @@
 # grepby
 [![Build Status](http://img.shields.io/travis/rholder/grepby.svg)](https://travis-ci.org/rholder/grepby)
-[![Latest Version](http://img.shields.io/badge/latest-1.0.0-brightgreen.svg)](https://github.com/rholder/grepby/releases/tag/v1.0.0)
+[![Latest Version](http://img.shields.io/badge/latest-1.1.0-brightgreen.svg)](https://github.com/rholder/grepby/releases/tag/v1.1.0)
 [![License](http://img.shields.io/badge/license-apache%202-brightgreen.svg)](https://github.com/rholder/grepby/blob/master/LICENSE)
 [![Coverage](http://gocover.io/_badge/github.com/rholder/grepby)](http://gocover.io/github.com/rholder/grepby)
 
@@ -13,6 +13,7 @@ like as they stream by, then this might be the tool you've been searching for.
 * Process an entire stream and give full aggregate match counts
 * Monitor a live stream of lines with --tail sending counts to stderr
 * Composable API with --output of lines matching 1 or more regexes
+* Output inverted, non-matching lines with --invert
 
 ## Installation
 Release binaries are available for several platforms.
@@ -20,14 +21,14 @@ Release binaries are available for several platforms.
 #### Linux
 Drop the binary into your path, such as `/usr/local/bin`:
 ```
-sudo curl -o /usr/local/bin/grepby -L "https://github.com/rholder/grepby/releases/download/v1.0.0/grepby_linux_amd64" && \
+sudo curl -o /usr/local/bin/grepby -L "https://github.com/rholder/grepby/releases/download/v1.1.0/grepby_linux_amd64" && \
 sudo chmod +x /usr/local/bin/grepby
 ```
 
 #### OSX
 Drop the binary into your path, such as `/usr/local/bin`:
 ```
-sudo curl -o /usr/local/bin/grepby -L "https://github.com/rholder/grepby/releases/download/v1.0.0/grepby_darwin_amd64" && \
+sudo curl -o /usr/local/bin/grepby -L "https://github.com/rholder/grepby/releases/download/v1.1.0/grepby_darwin_amd64" && \
 sudo chmod +x /usr/local/bin/grepby
 ```
 
@@ -49,7 +50,8 @@ Usage: grepby [regex1] [regex2] [regex3]...
 
   By default, all of stdin is read and the aggregate counts are output to
   stdout. When --tail or --output are used or combined, counts are output to
-  stderr and matching lines are output to stdout.
+  stderr and matching lines are output to stdout. When --invert is used,
+  non-matching lines are output to stdout and counts are output to stderr.
 
 Options:
 
@@ -57,6 +59,7 @@ Options:
   --tail          Print aggregate output every 2 seconds to stderr
   --tail=10       Print aggregate output every 10 seconds to stderr
   --output        Print all lines that match at least one regex to stdout
+  --invert        Invert matching and output non-matching lines
   --version       Print the version number
 ```
 
