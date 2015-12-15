@@ -1,6 +1,6 @@
 # grepby
 [![Build Status](http://img.shields.io/travis/rholder/grepby.svg)](https://travis-ci.org/rholder/grepby)
-[![Latest Version](http://img.shields.io/badge/latest-1.1.0-brightgreen.svg)](https://github.com/rholder/grepby/releases/tag/v1.1.0)
+[![Latest Version](http://img.shields.io/badge/latest-1.2.0-brightgreen.svg)](https://github.com/rholder/grepby/releases/tag/v1.2.0)
 [![License](http://img.shields.io/badge/license-apache%202-brightgreen.svg)](https://github.com/rholder/grepby/blob/master/LICENSE)
 [![Coverage](http://gocover.io/_badge/github.com/rholder/grepby)](http://gocover.io/github.com/rholder/grepby)
 
@@ -21,14 +21,14 @@ Release binaries are available for several platforms.
 #### Linux
 Drop the binary into your path, such as `/usr/local/bin`:
 ```
-sudo curl -o /usr/local/bin/grepby -L "https://github.com/rholder/grepby/releases/download/v1.1.0/grepby_linux_amd64" && \
+sudo curl -o /usr/local/bin/grepby -L "https://github.com/rholder/grepby/releases/download/v1.2.0/grepby_linux_amd64" && \
 sudo chmod +x /usr/local/bin/grepby
 ```
 
 #### OSX
 Drop the binary into your path, such as `/usr/local/bin`:
 ```
-sudo curl -o /usr/local/bin/grepby -L "https://github.com/rholder/grepby/releases/download/v1.1.0/grepby_darwin_amd64" && \
+sudo curl -o /usr/local/bin/grepby -L "https://github.com/rholder/grepby/releases/download/v1.2.0/grepby_darwin_amd64" && \
 sudo chmod +x /usr/local/bin/grepby
 ```
 
