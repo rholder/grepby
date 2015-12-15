@@ -98,7 +98,7 @@ func TestCliErr(t *testing.T) {
 	var in io.Reader = nil
 	err := cli(args, in, ioutil.Discard, ioutil.Discard)
 	if err != nil {
-		if !strings.HasPrefix(err.Error(), "strconv.ParseInt") {
+		if !strings.HasPrefix(err.Error(), "strconv.ParseUint") {
 			t.Fatal("Expected a parse error")
 		}
 	} else {

@@ -117,11 +117,29 @@ func TestConfigTailBogus(t *testing.T) {
 	if err == nil {
 		t.Fatal("Expected an error")
 	} else {
-		if !strings.HasPrefix(err.Error(), "strconv.ParseInt") {
-			t.Fatal("Expected strconv.ParseInt")
+		if !strings.HasPrefix(err.Error(), "strconv.ParseUint") {
+			t.Fatal("Expected strconv.ParseUint")
 		}
 	}
 }
+
+func TestConfigTailBogusEquals(t *testing.T) {
+	args := []string{"a", "b", "c", "--tail99potato"}
+	config, err := newConfig(args, os.Stdout, os.Stderr)
+
+	if config != nil {
+		t.Fatal("Unxpected config created")
+	}
+
+	if err == nil {
+		t.Fatal("Expected an error")
+	} else {
+		if !strings.HasPrefix(err.Error(), "Invalid --tail") {
+			t.Fatal("Expected invalid --tail error")
+		}
+	}
+}
+
 
 func TestConfigOutput(t *testing.T) {
 	args := []string{"a", "b", "c", "--output"}

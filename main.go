@@ -26,7 +26,7 @@ import (
 	"time"
 )
 
-const version = "1.1.0"
+const version = "1.2.0"
 const usageText = `Usage: grepby [regex1] [regex2] [regex3]...
 
   Use grepby to count lines that match regular expressions. It's a bit like
@@ -58,7 +58,7 @@ Report bugs and find the latest updates at https://github.com/rholder/grepby.
 type Config struct {
 	help          bool
 	tail          bool
-	tailDelay     float64
+	tailDelay     uint64
 	outputMatches bool
 	invert        bool
 	countWriter   io.Writer
@@ -99,7 +99,7 @@ func newRollup(config *Config) (*Rollup, error) {
 func newConfig(args []string, stdout io.Writer, stderr io.Writer) (*Config, error) {
 	config := Config{}
 	config.countWriter = stdout
-	config.tailDelay = 2.0
+	config.tailDelay = 2
 
 	enableTail := false
 	enableOutput := false
@@ -112,11 +112,13 @@ func newConfig(args []string, stdout io.Writer, stderr io.Writer) (*Config, erro
 			// handle a --tail and a --tail=N
 			enableTail = true
 			if strings.HasPrefix(arg, "--tail=") {
-				td, err := strconv.Atoi(arg[7:])
+				td, err := strconv.ParseUint(arg[7:], 10, 0)
 				if err != nil {
 					return nil, err
 				}
-				config.tailDelay = float64(td)
+				config.tailDelay = td
+			} else if len(arg) != 6 {
+				return nil, errors.New("Invalid --tail")
 			}
 		} else if "--output" == arg {
 			enableOutput = true
@@ -243,26 +245,25 @@ func cli(args []string, stdin io.Reader, stdout io.Writer, stderr io.Writer) err
 	}
 
 	// read from input
-	last := time.Now()
 	scanner := bufio.NewScanner(stdin)
 	outputMatches := rollup.config.outputMatches
 	invert := rollup.config.invert
 	matchWriter := rollup.config.matchWriter
+	if config.tail {
+		// ticker fires off every tailDelay seconds
+		ticker := time.NewTicker(time.Duration(config.tailDelay) * time.Second)
+		go func() {
+			for range ticker.C {
+				outputCounts(rollup)
+			}
+		}()
+	}
 	for scanner.Scan() {
 		line := scanner.Text()
 		lineMatched := updateCounts(rollup, line)
 
 		if shouldPrintMatch(invert, lineMatched, outputMatches) {
 			fmt.Fprintln(matchWriter, line)
-		}
-
-		if config.tail {
-			// TODO make this a repeating go routine
-			now := time.Now()
-			if now.Sub(last).Seconds() > config.tailDelay {
-				outputCounts(rollup)
-				last = now
-			}
 		}
 	}
 	outputCounts(rollup)
