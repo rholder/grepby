@@ -24,7 +24,7 @@ fmt:
 ## test: run the unit tests
 test:
 	mkdir -p $(BUILD_DIR)
-	go test -coverprofile $(BUILD_DIR)/coverage.out ./cmd/...
+	go test -v -coverprofile $(BUILD_DIR)/coverage.out ./cmd/...
 
 ## coverage: run the unit tests with test coverage output to build/coverage.html
 coverage: test
