@@ -26,7 +26,9 @@ import (
 	"time"
 )
 
-const version = "1.2.0"
+// Version override via: go build "-ldflags main.Version=x.x.x", defaults to 0.0.0-dev if unset
+var Version = "0.0.0-dev"
+
 const usageText = `Usage: grepby [regex1] [regex2] [regex3]...
 
   Use grepby to count lines that match regular expressions. It's a bit like
@@ -229,7 +231,7 @@ func cli(args []string, stdin io.Reader, stdout io.Writer, stderr io.Writer) err
 
 	// short circuit on --version
 	if config.version {
-		fmt.Fprintln(stdout, version)
+		fmt.Fprintln(stdout, Version)
 		return nil
 	}
 
