@@ -1,2 +1,8 @@
-bin/
-.idea/
+# custom local development file to source
+/.source_me
+
+# build artifacts
+/build/
+
+# because sometimes tmp things are created
+/tmp/
