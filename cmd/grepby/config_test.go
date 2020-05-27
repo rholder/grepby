@@ -140,7 +140,6 @@ func TestConfigTailBogusEquals(t *testing.T) {
 	}
 }
 
-
 func TestConfigOutput(t *testing.T) {
 	args := []string{"a", "b", "c", "--output"}
 	expectedParameters := []string{"a", "b", "c"}
