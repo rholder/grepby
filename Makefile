@@ -1,9 +1,10 @@
 .PHONY: all build coverage clean fmt test
 
-NAME=grepby
-VERSION=1.3.0-dev
+NAME = grepby
+BIN_NAME = $(NAME)
+VERSION = $(shell git describe --tags --always --long --dirty)
 
-BUILD_DIR=build
+BUILD_DIR = build
 
 all: clean build
 
@@ -11,10 +12,10 @@ all: clean build
 clean:
 	rm -rfv $(BUILD_DIR)
 
-## build: assemble the project and place a binary in build/
+## build: assemble the project and place a binary in build/ for this OS
 build:
 	mkdir -p $(BUILD_DIR)
-	cd cmd/$(NAME)/; go build -ldflags "-w -s -X main.Version=$(VERSION)" -o ../../$(BUILD_DIR)/$(NAME)
+	go build -ldflags "-w -s -X main.Version=$(VERSION)" -o $(BUILD_DIR)/$(BIN_NAME) ./cmd/$(NAME)/main.go
 	@echo Build successful.
 
 ## fmt: run gofmt for the project
