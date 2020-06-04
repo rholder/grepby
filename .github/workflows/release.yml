@@ -40,7 +40,7 @@ jobs:
         draft: true
         prerelease: true
 
-    - name: Upload Release Asset
+    - name: Upload Release Asset - grepby-darwin_amd64
       id: upload-release-asset-grepby-darwin_amd64
       uses: actions/upload-release-asset@v1.0.2
       env:
@@ -51,7 +51,7 @@ jobs:
         asset_name: grepby-darwin_amd64
         asset_content_type: application/octet-stream
 
-    - name: Upload Release Asset
+    - name: Upload Release Asset - grepby-linux_amd64
       id: upload-release-asset-grepby-linux_amd64
       uses: actions/upload-release-asset@v1.0.2
       env:
@@ -62,7 +62,7 @@ jobs:
         asset_name: grepby-linux_amd64
         asset_content_type: application/octet-stream
 
-    - name: Upload Release Asset
+    - name: Upload Release Asset - grepby-linux_arm
       id: upload-release-asset-grepby-linux_arm
       uses: actions/upload-release-asset@v1.0.2
       env:
@@ -73,7 +73,7 @@ jobs:
         asset_name: grepby-linux_arm
         asset_content_type: application/octet-stream
 
-    - name: Upload Release Asset grepby-linux_arm64
+    - name: Upload Release Asset - grepby-linux_arm64
       id: upload-release-asset-grepby-linux_arm64
       uses: actions/upload-release-asset@v1.0.2
       env:
@@ -84,7 +84,7 @@ jobs:
         asset_name: grepby-linux_arm64
         asset_content_type: application/octet-stream
 
-    - name: Upload Release Asset
+    - name: Upload Release Asset - grepby-windows_amd64.exe
       id: upload-release-asset-grepby-windows_amd64
       uses: actions/upload-release-asset@v1.0.2
       env:
@@ -95,7 +95,7 @@ jobs:
         asset_name: grepby-windows_amd64.exe
         asset_content_type: application/octet-stream
 
-    - name: Upload Release Asset
+    - name: Upload Release Asset - sha256sums
       id: upload-release-asset-sha256sums
       uses: actions/upload-release-asset@v1.0.2
       env:
