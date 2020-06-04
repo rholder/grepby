@@ -2,7 +2,7 @@
 
 NAME = grepby
 BIN_NAME = $(NAME)
-VERSION = $(shell git describe --tags --always --long --dirty)
+VERSION = $(shell git describe --tags --always --dirty)
 
 BUILD_DIR = build
 
