@@ -18,6 +18,17 @@ set -o nounset
 set -o errexit
 set -o pipefail
 
+
+# release.sh is expected to be in the root of the project directory
+__DIR__="$(cd "$(dirname "${0}")"; echo $(pwd))"
+__BASE_DIR__=$(basename "${__DIR__}")
+
+# build assets are expected to be in project root dir /build
+__BUILD_DIR__="${__DIR__}/build"
+
+# default to the directory name of where the project is checked out
+PROJECT_NAME=${1:-${__BASE_DIR__}}
+
 # just a few common OS_ARCH combinations, not everything
 OS_ARCHS=(
     darwin/amd64
@@ -26,6 +37,15 @@ OS_ARCHS=(
     linux/arm64
     windows/amd64
 )
+
+function log() {
+    local content=${1}
+    printf '\n'
+    printf '=%.0s' {1..80}
+    echo -e "\n${content}"
+    printf '=%.0s' {1..80}
+    printf '\n'
+}
 
 function build_for() {
     local os=${1}
@@ -40,16 +60,25 @@ function build_for() {
 
 function build_checksums() {
     local name=${1}
-    cd build/
+    cd ${__BUILD_DIR__}
+
+    log "Checking for platform-specific binaries..."
     file ${name}*
+
+    log "Generating SHA256 checksums..."
     sha256sum ${name}* | tee sha256sums
+
+    log "Verifying SHA256 checksums..."
     sha256sum -c sha256sums
 }
 
 function build_release() {
     local name=${1}
 
+    log "Cleaning up any previous builds..."
     make clean
+
+    log "Building platform-specific binaries..."
     for os_arch in "${OS_ARCHS[@]}"
     do
         goos=${os_arch%/*}
@@ -60,4 +89,4 @@ function build_release() {
     build_checksums ${name}
 }
 
-build_release "${1}"
+build_release "${PROJECT_NAME}"
