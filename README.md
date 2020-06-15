@@ -36,10 +36,10 @@ sudo chmod +x /usr/local/bin/grepby
 #### Windows
 Download the `.exe` from the latest [releases](https://github.com/rholder/grepby/releases/latest).
 
-#### Source
-Install it from source with `go get`:
+#### Latest Source
+Install it from the latest source available with `go get`:
 ```bash
-go get github.com/rholder/grepby
+go get github.com/rholder/grepby/cmd/grepby
 ```
 
 ## Usage
