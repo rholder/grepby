@@ -22,14 +22,14 @@ Release binaries are available for several platforms.
 #### Linux
 Drop the binary into your path, such as `/usr/local/bin`:
 ```
-sudo curl -o /usr/local/bin/grepby -L "https://github.com/rholder/grepby/releases/download/v1.2.0/grepby_linux_amd64" && \
+sudo curl -o /usr/local/bin/grepby -L "https://github.com/rholder/grepby/releases/latest/download/grepby-linux_amd64" && \
 sudo chmod +x /usr/local/bin/grepby
 ```
 
-#### OSX
+#### macOS
 Drop the binary into your path, such as `/usr/local/bin`:
 ```
-sudo curl -o /usr/local/bin/grepby -L "https://github.com/rholder/grepby/releases/download/v1.2.0/grepby_darwin_amd64" && \
+sudo curl -o /usr/local/bin/grepby -L "https://github.com/rholder/grepby/releases/latest/download/grepby-darwin_amd64" && \
 sudo chmod +x /usr/local/bin/grepby
 ```
 
