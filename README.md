@@ -1,6 +1,6 @@
 # grepby
 [![Build Status](http://img.shields.io/travis/rholder/grepby.svg)](https://travis-ci.org/rholder/grepby)
-[![Latest Version](http://img.shields.io/badge/latest-1.2.0-brightgreen.svg)](https://github.com/rholder/grepby/releases/tag/v1.2.0)
+[![Latest Version](https://img.shields.io/github/v/release/rholder/grepby?color=bright-green&sort=semver)](https://github.com/rholder/grepby/releases/latest)
 [![License](http://img.shields.io/badge/license-apache%202-brightgreen.svg)](https://github.com/rholder/grepby/blob/master/LICENSE)
 [![Coverage](https://gocover.io/_badge/github.com/rholder/grepby/cmd/grepby)](https://gocover.io/github.com/rholder/grepby/cmd/grepby)
 [![Go Report Card](https://goreportcard.com/badge/github.com/rholder/grepby)](https://goreportcard.com/report/github.com/rholder/grepby)
