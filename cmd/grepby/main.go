@@ -57,6 +57,7 @@ Examples:
 Report bugs and find the latest updates at https://github.com/rholder/grepby.
 `
 
+// Config holds all the parameters parsed from arguments.
 type Config struct {
 	help          bool
 	tail          bool
@@ -70,12 +71,14 @@ type Config struct {
 	version       bool
 }
 
+// PatternCount stores runtime counts of the matching regular expression.
 type PatternCount struct {
 	pattern string
 	count   uint64
 	regex   *regexp.Regexp
 }
 
+// Rollup stores all regular expression counts, configuration, and a total.
 type Rollup struct {
 	config   *Config
 	patterns []*PatternCount
