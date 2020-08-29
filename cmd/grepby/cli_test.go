@@ -73,7 +73,7 @@ func TestCliHelp(t *testing.T) {
 	args := []string{"a", "b", "c", "--help"}
 
 	// --help should short circuit before reading
-	var in io.Reader = nil
+	var in io.Reader
 	err := cli(args, in, ioutil.Discard, ioutil.Discard)
 	if err != nil {
 		t.Fatal("Unexpected error")
@@ -84,7 +84,7 @@ func TestCliVersion(t *testing.T) {
 	args := []string{"a", "b", "c", "--version"}
 
 	// --version should short circuit before reading
-	var in io.Reader = nil
+	var in io.Reader
 	err := cli(args, in, ioutil.Discard, ioutil.Discard)
 	if err != nil {
 		t.Fatal("Unexpected error")
@@ -95,7 +95,7 @@ func TestCliErr(t *testing.T) {
 	args := []string{"a", "b", "c", "--tail=potato"}
 
 	// err should short circuit before reading
-	var in io.Reader = nil
+	var in io.Reader
 	err := cli(args, in, ioutil.Discard, ioutil.Discard)
 	if err != nil {
 		if !strings.HasPrefix(err.Error(), "strconv.ParseUint") {
