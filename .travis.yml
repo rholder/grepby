@@ -1,5 +1,9 @@
+dist: bionic
+
 language: go
+
 go:
-  - 1.14
-  - tip
-script: make test
+  - 1.15
+
+script:
+- make test
