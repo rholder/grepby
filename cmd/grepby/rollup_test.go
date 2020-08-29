@@ -40,6 +40,9 @@ func TestRollup(t *testing.T) {
 
 	args := []string{"abc", "def", "ghi"}
 	config, err := newConfig(args, ioutil.Discard, ioutil.Discard)
+	if err != nil {
+		t.Fatal("Unxpected rollup error:", err)
+	}
 	rollup, err := newRollup(config)
 	if err != nil {
 		t.Fatal("Unxpected rollup error:", err)
